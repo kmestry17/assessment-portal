@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage"; // Make sure to import the DashboardPage component
+import ExamPage from "./pages/ExamPage"; // Import ExamPage
 
 function App() {
   // State to check if the user is logged in
@@ -57,6 +58,10 @@ function App() {
           <Route
             path="/dashboard"
             element={isLoggedIn ? <DashboardPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/exam/:examId"
+            element={isLoggedIn ? <ExamPage /> : <Navigate to="/login" />}
           />
           {/* Redirect any unknown paths to the home page */}
           <Route path="*" element={<Navigate to="/" />} />
