@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { users } from "../../data/users";
 
 const Login = ({ onLoginSuccess }) => {
   // useState is a hook that allows you to have state variables in functional components
@@ -12,7 +13,7 @@ const Login = ({ onLoginSuccess }) => {
   // handleLogin is a function that is called when the form is submitted
 
   const handleLogin = () => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    //const users = JSON.parse(localStorage.getItem("users")) || [];
 
     // find the user in the users array
     const user = users.find(
