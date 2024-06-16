@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -13,14 +13,26 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage"; // Make sure to import the DashboardPage component
 
 function App() {
-  // Flag to check if the user is logged in
-  const isLoggedIn = !!localStorage.getItem("loggedInUser");
+  // State to check if the user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("loggedInUser")
+  );
+
+  // Function to update the login status
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  // Check if the user is logged in when the app loads
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("loggedInUser"));
+  }, []);
 
   return (
     <>
       <Router>
         <nav>
-          {!isLoggedIn && <Link to="/">Home</Link>}
+          <Link to="/">Home</Link>
           {!isLoggedIn && <Link to="/login">Login</Link>}
           {!isLoggedIn && <Link to="/register">Register</Link>}
         </nav>
@@ -28,7 +40,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route
             path="/login"
-            element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage />}
+            element={
+              isLoggedIn ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <LoginPage onLoginSuccess={handleLoginSuccess} />
+              )
+            }
           />
           <Route
             path="/register"

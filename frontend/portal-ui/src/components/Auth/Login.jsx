@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   // useState is a hook that allows you to have state variables in functional components
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,11 +22,9 @@ const Login = () => {
     if (user) {
       // if the user is found, set the user in local storage
       localStorage.setItem("loggedInUser", JSON.stringify(user));
-
+      onLoginSuccess(); // Call the prop function to update the login status
       console.log("Login successful");
-
-      // redirect to the dashboard
-      navigate("/dashboard");
+      navigate("/dashboard"); // Redirect the user to the dashboard
     } else {
       console.log("Login failed. Invalid credentials.");
     }
